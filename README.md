@@ -31,3 +31,32 @@ Home page: https://github.com/btroncone/ngrx-store-logger
 npm install ngrx-store-logger --save
 ```
 
+#### my-firebase-app-config.ts
+This has been excluded from git.
+```typescript
+import {
+    FirebaseAppConfig
+} from 'angularfire2';
+
+export class MyFirebaseAppConfig {
+    static config: FirebaseAppConfig = {
+    apiKey: '????????',
+    authDomain: '?????????',
+    databaseURL: '?????????',
+    storageBucket: '?????????'
+  };
+}
+```
+
+Called in app.ts.
+```typescript
+ionicBootstrap(MyApp, [
+  ....
+  ....
+
+  FIREBASE_PROVIDERS,
+
+  // Initialize Firebase app  
+  defaultFirebase(MyFirebaseAppConfig.config)
+]);
+```
