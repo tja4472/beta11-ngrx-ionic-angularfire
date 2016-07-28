@@ -5,6 +5,7 @@ import { StatusBar } from 'ionic-native';
 import { Page1 } from './pages/page1/page1';
 import { Page2 } from './pages/page2/page2';
 
+import {LoginPage} from './pages/login/login.page';
 import {SignupPage} from './pages/signup/signup.page';
 
 import { provideStore, combineReducers, Store }from '@ngrx/store';
@@ -40,6 +41,7 @@ class MyApp {
     this.pages = [
       { title: 'Page uno', component: Page1 },
       { title: 'Page dos', component: Page2 },
+      { title: 'Login', component: LoginPage },       
       { title: 'Signup', component: SignupPage }      
     ];
 
