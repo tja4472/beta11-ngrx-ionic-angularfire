@@ -8,3 +8,6 @@ plugins/
 *.swp
 .DS_Store
 Thumbs.db
+
+my-firebase-app-config.ts
+
