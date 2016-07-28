@@ -25,5 +25,9 @@ npm install @ngrx/store --save
 npm install @ngrx/effects --save
 ```
 
-
+#### ngrx-store-logger
+Home page: https://github.com/btroncone/ngrx-store-logger
+```
+npm install ngrx-store-logger --save
+```
 
