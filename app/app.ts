@@ -5,8 +5,9 @@ import { StatusBar } from 'ionic-native';
 import { Page1 } from './pages/page1/page1';
 import { Page2 } from './pages/page2/page2';
 
-import {LoginPage} from './pages/login/login.page';
-import {SignupPage} from './pages/signup/signup.page';
+import { HomePage } from './pages/home/home.page';
+import { LoginPage } from './pages/login/login.page';
+import { SignupPage } from './pages/signup/signup.page';
 
 import { provideStore, combineReducers, Store }from '@ngrx/store';
 import { runEffects } from '@ngrx/effects';
@@ -21,6 +22,8 @@ import {
   FIREBASE_PROVIDERS,
   FirebaseAuthState
 } from 'angularfire2';
+
+import 'rxjs/add/operator/do';
 
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
@@ -51,7 +54,8 @@ class MyApp {
       { title: 'Page dos', component: Page2 },
       { title: 'Login', component: LoginPage },
       { title: 'Signup', component: SignupPage },
-      { title: 'Logout', component: Page1 },      
+      { title: 'Logout', component: Page1 },     
+      { title: 'Home Page', component: HomePage },        
     ];
 
     // Subscribe to the auth object to check for the login status

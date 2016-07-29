@@ -1,9 +1,12 @@
 import { LoginActions } from './login.action';
+import { TextItemActions } from './textItem.action';
 
 export {
-  LoginActions
+LoginActions,
+TextItemActions
 };
 
 export default [
-  LoginActions
+  LoginActions,
+  TextItemActions
 ];

@@ -42,7 +42,7 @@ import { combineReducers } from '@ngrx/store';
  */
 // import searchReducer, * as fromSearch from './search';
 // import booksReducer, * as fromBooks from './books';
-// import collectionReducer, * as fromCollection from './collection';
+import collectionReducer, * as fromCollection from './collection';
 import loginReducer, * as fromLogin from './login.reducer';
 
 /**
@@ -52,7 +52,7 @@ import loginReducer, * as fromLogin from './login.reducer';
 export interface AppState {
   // search: fromSearch.SearchState;
   // books: fromBooks.BooksState;
-  // collection: fromCollection.CollectionState;
+  collection: fromCollection.CollectionState;
   login: fromLogin.LoginState;
 }
 
@@ -66,7 +66,7 @@ export interface AppState {
 export default compose(storeLogger(), combineReducers)({
   // search: searchReducer,
   // books: booksReducer,
-  // collection: collectionReducer,
+  collection: collectionReducer,
   login: loginReducer
 });
 
@@ -154,7 +154,7 @@ export function getSearchResults() {
 }
 */
 
-/*
+
 export function getCollectionState() {
   return (state$: Observable<AppState>) => state$
     .select(s => s.collection);
@@ -171,7 +171,6 @@ export function getCollectionLoading() {
 export function getCollectionTextItems() {
   return compose(fromCollection.getTextItems(), getCollectionState());
 }
-*/
 
 /*
 export function getCollectionBookIds() {
