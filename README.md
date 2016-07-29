@@ -1,3 +1,8 @@
+Currently requires "firebase": "3.2.0".
+3.2.1 gives error on 
+      // Run once.
+      af.auth.unsubscribe();
+
 #### Created using sidemenu template.
 http://ionicframework.com/docs/v2/getting-started/installation/
 ```

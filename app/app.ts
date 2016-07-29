@@ -34,17 +34,41 @@ class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(private platform: Platform) {
+  private subscription;
+
+  constructor(
+  
+    private loginActions: LoginActions,    
+    private platform: Platform,
+    public af: AngularFire,      
+    private store: Store<AppState>    
+  ) {
     this.initializeApp();
 
     // used for an example of ngFor and navigation
     this.pages = [
       { title: 'Page uno', component: Page1 },
       { title: 'Page dos', component: Page2 },
-      { title: 'Login', component: LoginPage },       
-      { title: 'Signup', component: SignupPage }      
+      { title: 'Login', component: LoginPage },
+      { title: 'Signup', component: SignupPage },
+      { title: 'Logout', component: Page1 },      
     ];
 
+    // Subscribe to the auth object to check for the login status
+    // of the user.      
+    af.auth.subscribe((authState: FirebaseAuthState) => {
+      // Run once.
+      af.auth.unsubscribe();
+
+      console.log('af.auth.subscribe:authState>', authState);
+      let authenticated: boolean = !!authState;
+
+      console.log('authenticated:', authenticated);
+
+      if (authenticated) {
+        this.store.dispatch(loginActions.restoreAuthentication(authState));
+      }    
+    });  
   }
 
   initializeApp() {
@@ -53,12 +77,49 @@ class MyApp {
       // Here you can do any higher level native things you might need.
       StatusBar.styleDefault();
     });
+
+    this.subscription =
+      this.store
+        .let(getLoginState())
+        .subscribe(loginState => {
+          // Triggered when loginState changes. 
+          // i.e. when user logs in or logs out.
+          console.log('loginState>', loginState);
+          console.log('loginState.isAuthorized>', loginState.isAuthenticated);
+          // this.enableMenu(loginState.isAuthenticated);
+
+          /*
+                    if (loginState.isAuthorized) {
+                      this.rootPage = HomePage;
+                    }
+                    else {
+                      this.rootPage = LoginPage;
+                    }
+          */
+        });    
   }
 
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
+
+    if (page.title === 'Logout') {
+      // Give the menu time to close before changing to logged out
+      setTimeout(() => {
+        // this.userData.logout();
+        this.store.dispatch(this.loginActions.logout());
+        this.af.auth.logout();
+      }, 1000);
+    }    
+  }
+
+  ionViewWillLeave() {
+    console.log('ionViewWillLeave');
+  }
+
+  ionViewDidLeave() {
+    console.log('ionViewDidLeave');
   }
 }
 
