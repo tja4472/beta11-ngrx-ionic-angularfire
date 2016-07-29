@@ -1,25 +1,33 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { ExampleList, IsFetchingInput, PostsInput } from '../../components/example-list/example-list.component';
 import { Observable } from 'rxjs/Observable';
+import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
 import { AppState, getCollectionLoading, getCollectionTextItems } from '../../reducers';
 import { TextItemActions } from '../../actions';
+import { TextItemEffects } from '../../effects';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   directives: [ExampleList],
+  providers: [ TextItemEffects ],
   templateUrl: 'build/pages/home/home.page.html'
 })
 export class HomePage implements OnInit {
   posts$: Observable<PostsInput>;
   isFetching$: Observable<IsFetchingInput>;
 
+  effectsSubscription: Subscription;
+
   constructor(
     private textItemActions: TextItemActions,
+    private textItemEffects: TextItemEffects,
     private store: Store<AppState>
   ) {
     this.isFetching$ = store.let(getCollectionLoading());
     this.posts$ = store.let(getCollectionTextItems());
+
+    this.effectsSubscription = textItemEffects.loadCollection$.subscribe(store);
   }
 
   ngOnInit() {
@@ -42,5 +50,15 @@ export class HomePage implements OnInit {
       //        return (item.toLowerCase().indexOf(val.toLowerCase()) > -1);
       //      })
     }
+  }
+
+  ionViewWillUnload() {
+    console.log('ionViewWillUnload');
+    this.effectsSubscription.unsubscribe();
+  }
+
+  ionViewDidUnload() {
+    console.log('ionViewDidUnload');
+    // this.effectsSubscription.unsubscribe();
   }
 }
