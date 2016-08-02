@@ -24,6 +24,7 @@ import {
 } from 'angularfire2';
 
 import 'rxjs/add/operator/do';
+import { Observable } from 'rxjs/Observable';
 
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
@@ -37,6 +38,8 @@ class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
+  loginState$: any;
+
   private subscription;
 
   constructor(
@@ -47,6 +50,8 @@ class MyApp {
     private store: Store<AppState>    
   ) {
     this.initializeApp();
+
+     this.loginState$ = this.store.let(getLoginState());
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -60,9 +65,9 @@ class MyApp {
 
     // Subscribe to the auth object to check for the login status
     // of the user.      
-    af.auth.subscribe((authState: FirebaseAuthState) => {
+    af.auth.take(1).subscribe((authState: FirebaseAuthState) => {
       // Run once.
-      af.auth.unsubscribe();
+      // af.auth.unsubscribe();
 
       console.log('af.auth.subscribe:authState>', authState);
       let authenticated: boolean = !!authState;
