@@ -23,8 +23,11 @@ import {
   FirebaseAuthState
 } from 'angularfire2';
 
-import 'rxjs/add/operator/do';
+// import 'rxjs/add/operator/do';
 import { Observable } from 'rxjs/Observable';
+
+// Add the RxJS Observable operators we need in this app.
+import './rxjs-operators';
 
 import { MyFirebaseAppConfig } from './my-firebase-app-config';
 
