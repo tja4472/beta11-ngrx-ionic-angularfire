@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { TextItemActions } from '../actions';
 import { TextItem } from '../models';
 
+import { assign } from '../utils';
+
 export interface CollectionState {
   loaded: boolean;
   loading: boolean;
@@ -21,7 +23,7 @@ const initialState: CollectionState = {
 export default function(state = initialState, action: Action): CollectionState {
   switch (action.type) {
     case TextItemActions.LOAD_COLLECTION: {
-      return Object.assign({}, state, {
+      return assign(state, {
         loading: true
       });
     }

@@ -6,6 +6,8 @@ import { Observable } from 'rxjs/Observable';
 import { LoginActions } from '../actions';
 import { FirebaseAuthState } from 'angularfire2';
 
+import { assign } from '../utils';
+
 export interface LoginState {
     displayName: string;
     isAuthenticated: boolean;
@@ -33,7 +35,7 @@ export default function (state = initialState, action: Action): LoginState {
         }
 */
         case LoginActions.GOOGLE_AUTHENTICATION : {
-            return Object.assign({}, state, {
+            return assign(state, {
                 isAuthenticating: true
             });
         }
@@ -45,7 +47,7 @@ export default function (state = initialState, action: Action): LoginState {
         case LoginActions.RESTORE_AUTHENTICATION: {
             let user: FirebaseAuthState = action.payload;
 
-            return Object.assign({}, state, {
+            return assign(state, {
                 displayName: getDisplayName(user),                
                 isAuthenticated: true,
                 isAuthenticating: false
@@ -53,7 +55,7 @@ export default function (state = initialState, action: Action): LoginState {
         }
 
         case LoginActions.LOGOUT: {
-            return Object.assign({}, state, {
+            return assign(state, {
                 displayName: '',
                 isAuthenticated: false,
                 isAuthenticating: false
@@ -63,7 +65,7 @@ export default function (state = initialState, action: Action): LoginState {
         case LoginActions.ANONYMOUS_AUTHENTICATION:
         case LoginActions.CREATE_USER:        
         case LoginActions.EMAIL_AUTHENTICATION: {
-            return Object.assign({}, state, {
+            return assign(state, {
                 error: null,
                 isAuthenticating: true
             });
@@ -72,7 +74,7 @@ export default function (state = initialState, action: Action): LoginState {
         case LoginActions.ANONYMOUS_AUTHENTICATION_FAILURE:
         case LoginActions.CREATE_USER_FAILURE:        
         case LoginActions.EMAIL_AUTHENTICATION_FAILURE: {
-            return Object.assign({}, state, {
+            return assign(state, {
                 error: action.payload,
                 isAuthenticating: false
             }); 
