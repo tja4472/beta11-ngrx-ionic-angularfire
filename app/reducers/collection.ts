@@ -44,20 +44,7 @@ export default function(state = initialState, action: Action): CollectionState {
   }
 }
 
-export function getLoaded() {
-  return (state$: Observable<CollectionState>) => state$
-    .select(s => s.loaded);
-}
 
-export function getLoading() {
-  return (state$: Observable<CollectionState>) => state$
-    .select(s => s.loading);
-}
-
-export function getTextItems() {
-  return (state$: Observable<CollectionState>) => state$
-    .select(s => s.textItems);
-}
 
 /*
 export function getBookIds() {

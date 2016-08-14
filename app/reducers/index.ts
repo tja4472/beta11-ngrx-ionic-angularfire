@@ -63,6 +63,9 @@ export interface AppState {
   login: fromLogin.LoginState;
 }
 
+export * from './collection';
+export * from './login.reducer';
+
 /**
  * Because metareducers take a reducer function and return a new reducer,
  * we can use our compose helper to chain them together. Here we are
@@ -162,22 +165,6 @@ export function getSearchResults() {
 */
 
 
-export function getCollectionState() {
-  return (state$: Observable<AppState>) => state$
-    .select(s => s.collection);
-}
-
-export function getCollectionLoaded() {
-  return compose(fromCollection.getLoaded(), getCollectionState());
-}
-
-export function getCollectionLoading() {
-  return compose(fromCollection.getLoading(), getCollectionState());
-}
-
-export function getCollectionTextItems() {
-  return compose(fromCollection.getTextItems(), getCollectionState());
-}
 
 /*
 export function getCollectionBookIds() {
@@ -195,11 +182,4 @@ export function getBookCollection() {
 }
 */
 
-export function getLoginState() {
-  return (state$: Observable<AppState>) => state$
-    .select(s => s.login);
-}
 
-export function getLoginIsAuthorized() {
-  return compose(fromLogin.getIsAuthenticated, getLoginState());
-}

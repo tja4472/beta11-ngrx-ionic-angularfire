@@ -14,7 +14,8 @@ import { runEffects } from '@ngrx/effects';
 import { compose } from '@ngrx/core/compose';
 import actions, { LoginActions } from './actions';
 import effects from './effects';
-import reducer, { AppState, getLoginState } from './reducers';
+import reducer, { AppState } from './reducers';
+import { LoginSelector } from './selectors';
 
 import {
   AngularFire,
@@ -54,7 +55,7 @@ class MyApp {
   ) {
     this.initializeApp();
 
-     this.loginState$ = this.store.let(getLoginState());
+     this.loginState$ = this.store.let(LoginSelector.getLoginState());
 
     // used for an example of ngFor and navigation
     this.pages = [
@@ -92,7 +93,7 @@ class MyApp {
 
     this.subscription =
       this.store
-        .let(getLoginState())
+        .let(LoginSelector.getLoginState())
         .subscribe(loginState => {
           // Triggered when loginState changes. 
           // i.e. when user logs in or logs out.

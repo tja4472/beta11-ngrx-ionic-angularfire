@@ -3,9 +3,10 @@ import { ExampleList, IsFetchingInput, PostsInput } from '../../components/examp
 import { Observable } from 'rxjs/Observable';
 import { Subscription } from 'rxjs/Subscription';
 import { Store } from '@ngrx/store';
-import { AppState, getCollectionLoading, getCollectionTextItems } from '../../reducers';
+import { AppState } from '../../reducers';
 import { TextItemActions } from '../../actions';
 import { TextItemEffects } from '../../effects';
+import { CollectionSelector} from '../../selectors';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -24,8 +25,8 @@ export class HomePage implements OnInit {
     private textItemEffects: TextItemEffects,
     private store: Store<AppState>
   ) {
-    this.isFetching$ = store.let(getCollectionLoading());
-    this.posts$ = store.let(getCollectionTextItems());
+    this.isFetching$ = store.let(CollectionSelector.getCollectionLoading());
+    this.posts$ = store.let(CollectionSelector.getCollectionTextItems());
 
     this.effectsSubscription = textItemEffects.loadCollection$.subscribe(store);
   }

@@ -111,11 +111,6 @@ export default function (state = initialState, action: Action): LoginState {
     }
 }
 
-export function getIsAuthenticated() {
-    return (state$: Observable<LoginState>) => state$
-        .select(s => s.isAuthenticated);
-}
-
 function getDisplayName(user: FirebaseAuthState) {
     if (user.auth.isAnonymous) return 'Anonymous';
 

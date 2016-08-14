@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 
-import { Error, ErrorInput } from '../../components/error/error.component'
+import { Error, ErrorInput } from '../../components/error/error.component';
 
 import { Store } from '@ngrx/store';
 import { LoginActions } from '../../actions';
-import { AppState, getLoginState } from '../../reducers';
+import { AppState } from '../../reducers';
+import { LoginSelector } from '../../selectors';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -21,7 +22,7 @@ export class SignupPage {
     private loginActions: LoginActions,
     private store: Store<AppState>) {
     //
-    this.loginState$ = this.store.let(getLoginState());
+    this.loginState$ = this.store.let(LoginSelector.getLoginState());
   }
 
   onSignup(form) {
