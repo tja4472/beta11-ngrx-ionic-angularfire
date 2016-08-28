@@ -9,25 +9,51 @@ import { LoginActions } from '../../actions';
 import { AppState } from '../../reducers';
 import { LoginSelector } from '../../selectors';
 
+import {Validators, FormBuilder, FormGroup } from '@angular/forms';
+
 @Component({
-  changeDetection: ChangeDetectionStrategy.OnPush,  
-  directives: [Error],  
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  directives: [Error],
   templateUrl: 'build/pages/login/login.page.html'
 })
 export class LoginPage {
-  login: { username?: string, password?: string } = {};
+  // login: { username?: string, password?: string } = {};
   submitted = false;
+  public loginForm: FormGroup; 
 
   loginState$: any;
 
   constructor(
+    private formBuilder: FormBuilder,
     private loginActions: LoginActions,
     private nav: NavController,
-    private store: Store<AppState>) { 
-      //
-      this.loginState$ = this.store.let(LoginSelector.getLoginState());
-    }
+    private store: Store<AppState>) {
+    //
+    this.loginState$ = this.store.let(LoginSelector.getLoginState());
+  }
 
+  ionViewLoaded() {
+    //
+    this.loginForm = this.formBuilder.group({
+      username: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+  }
+
+  logForm() {
+    console.log(this.loginForm.value);
+    console.log('loginForm>', this.loginForm);
+
+    this.submitted = true;
+
+    if (this.loginForm.valid) {
+      this.store.dispatch(
+        this.loginActions.emailAuthentication(
+          this.loginForm.value.username,
+          this.loginForm.value.password));
+    }    
+  }
+/*
   onLogin(form) {
     this.submitted = true;
 
@@ -38,6 +64,7 @@ export class LoginPage {
           this.login.password));
     }
   }
+*/
 
   onSignup() {
     this.nav.push(SignupPage);

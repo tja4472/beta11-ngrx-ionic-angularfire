@@ -10,27 +10,27 @@
 <ion-content class="login-page">
 
   <ion-list>
-    <form #signupForm="ngForm" novalidate>
+    <form [formGroup]="loginForm" (ngSubmit)="logForm()" novalidate>
       <ion-item>
         <ion-label floating primary>Username</ion-label>
-        <ion-input [(ngModel)]="signup.username" ngControl="username" type="text" #username="ngForm" required>
+        <ion-input type="text" formControlName="username">
         </ion-input>
       </ion-item>
-      <p [hidden]="username.valid || submitted == false" danger padding-left>
-        Username is required
-      </p>
+
+      <p *ngIf="!loginForm.controls.username.valid">This field is invalid!</p>
+      <p *ngIf="loginForm.controls.username.errors">This field is required!</p>
+      <p *ngIf="loginForm.controls.username.hasError('required')">This field is required! AAAA</p>
 
       <ion-item>
         <ion-label floating primary>Password</ion-label>
-        <ion-input [(ngModel)]="signup.password" ngControl="password" type="password" #password="ngForm" required>
+        <ion-input type="password" formControlName="password">
         </ion-input>
       </ion-item>
-      <p [hidden]="password.valid || submitted == false" danger padding-left>
-        Password is required
-      </p>
+
+      <p *ngIf="loginForm.controls.password.hasError('required')">This field is required!</p>      
 
       <div padding>
-        <button (click)="onSignup(signupForm)" type="submit" primary block>Create</button>
+        <button type="submit" primary block>Create</button>
       </div>
     </form>
   </ion-list>
